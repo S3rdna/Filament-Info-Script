@@ -52,18 +52,21 @@ jadeWhitePLA = Filament('Bambu Labs', 'Jade White','PLA', 1000)
 
 # Return data in gui format 
 
-def print_content():
-    # Get content from text widget and print it
-    content = text_area.get("1.0", tk.END)
-    print(content)
-
 def handleAddFilamentBtn():
     manufacturer = brandEntry.get()
     color = colorEntry.get()
     material = materialEntry.get()
     weight = weightEntry.get()
-
     writeToDB(Filament(manufacturer,color,material,weight))
+
+def update():
+# Create labels with info to infoFrame
+    for w in infoFrame.winfo_children():
+        w.destroy()
+    for i,val in enumerate(readFromDB()):
+        temp = tk.Label(infoFrame,text=val)
+        temp.pack()
+    root.after(100,update)
     
 # Create the main window
 root = tk.Tk()
@@ -75,14 +78,9 @@ root.geometry("800x450")
 # create frames 
 addFilFrame = tk.Frame(root)
 addFilFrame.pack(side=tk.LEFT,fill=tk.Y)
-infoFrame = tk.Frame(root)
-infoFrame.pack(side=tk.RIGHT,fill=tk.BOTH,expand=True)
 
-# Create labels with info to infoFrame
-for index,val in enumerate(readFromDB()):
-    print(index,val)
-    temp = tk.Label(infoFrame,text=val)
-    temp.pack()
+infoFrame = tk.Frame(root)
+infoFrame.pack(side=tk.RIGHT,fill=tk.Y,expand=True)
 
 # add entry fields to shite
 brandEntry = tk.Entry(addFilFrame,text='Manufacturer')
@@ -98,6 +96,12 @@ weightEntry.pack()
 # add to db Btn 
 add_btn = tk.Button(addFilFrame,text='Add Filament', command=handleAddFilamentBtn)
 add_btn.pack()
+
+for index,val in enumerate(readFromDB()):
+    temp = tk.Label(infoFrame,text=val)
+    temp.pack()
+
+update()
 
 # Start the GUI event loop
 root.mainloop()
