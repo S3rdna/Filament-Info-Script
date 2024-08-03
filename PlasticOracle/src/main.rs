@@ -63,6 +63,8 @@ impl MaterialModifier {
         .into_iter()
     }
 }
+
+#[derive(Debug)]
 struct Filament {
     material: MaterialType,
     modifier: MaterialModifier,
@@ -118,34 +120,41 @@ fn filament_builder() -> Filament {
         count += 1;
     }
 
-    let mut fil_choice = [0;1];
+    let mut fil_choice = [0;2];
     let _ = io::stdin().read(&mut fil_choice);
 
-    println!("{:?}",fil_choice);
+    println!("mat:{:?}",fil_choice);
 
     //choose modifier
     println!("choose mod");
     println!("====================");
 
     let mut count = 0;
-    for mod in MaterialModifier::into_iter() { // loop thru mod types 
-        println!("{count}. {:?}",mod);
+    for mat_mod in MaterialModifier::into_iter() { // loop thru mod types 
+        println!("{count}. {:?}",mat_mod);
         count += 1;
     }
 
+    fil_choice = [0;2];
     let _ = io::stdin().read(&mut fil_choice);
 
+    println!("mod:{:?}",fil_choice);
+
     // get price
+    print!("Price:");
     let mut price = String::new(); //create buffer to hold input
     let _ = io::stdin().read_line(&mut price); // create stdin struct
     match price.trim().to_string().parse::<f32>() {
         Ok(k) => new_price = k,
         Err(_) => new_price = 20.08,
     };
+    print!("\n");
+
     // get date
     let now = Local::now();
     let new_date =  now.date_naive().to_string();
     println!("{:?}",new_date);
+
     // return filament
     Filament {
         material: MaterialType::PLA,
@@ -160,9 +169,12 @@ fn add_filament() {
     use std::fs::File;
 
     let new_filament = filament_builder();
+    println!("filament: {:?}",new_filament);
+
     let file = File::open("filamentDB.csv").unwrap();
     let mut wtr = WriterBuilder::new().from_writer(file);
     wtr.write_record(&["a", "betoasijadso", "c"]).unwrap();
+    println!("Done Writing");
 }
 
 fn main() {
