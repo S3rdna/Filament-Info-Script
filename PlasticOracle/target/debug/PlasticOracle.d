@@ -1,1 +1,1 @@
-C:\Users\A\Documents\code\scripts\filament\ estimator\PlasticOracle\target\debug\PlasticOracle.exe: C:\Users\A\Documents\code\scripts\filament\ estimator\PlasticOracle\src\main.rs
+/Users/aaguilar/Documents/code/holding/Filament-Info-Script/PlasticOracle/target/debug/PlasticOracle: /Users/aaguilar/Documents/code/holding/Filament-Info-Script/PlasticOracle/src/main.rs
