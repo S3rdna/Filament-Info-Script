@@ -136,7 +136,7 @@ fn filament_builder() -> Filament {
     }
 
     fil_choice = [0;2];
-    let _ = io::stdin().read(&mut fil_choice);
+    let _ = io::stdin().read_to_string(&mut fil_choice);
 
     println!("mod:{:?}",fil_choice);
 
@@ -157,10 +157,10 @@ fn filament_builder() -> Filament {
 
     // return filament
     Filament {
-        material: MaterialType::PLA,
-        modifier: MaterialModifier::BASIC,
-        price: 20.00,
-        buy_date: "asijd".to_string(),
+        material: new_mat,
+        modifier: new_mod,
+        price: new_price,
+        buy_date: new_date,
     }
 }
 
