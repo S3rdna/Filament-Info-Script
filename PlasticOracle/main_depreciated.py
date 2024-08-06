@@ -1,3 +1,5 @@
+# probably not gonna finish this 
+
 import csv
 import tkinter as tk  
 
